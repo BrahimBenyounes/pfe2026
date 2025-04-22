@@ -21,12 +21,7 @@ pipeline {
     stages {
       
 
-        stage('Build with Maven') {
-            steps {
-                sh 'mvn clean install -DskipTests'
-            }
-        }
-
+    
         stage('Build Docker Images') {
             steps {
                 script {
