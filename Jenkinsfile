@@ -14,13 +14,10 @@ pipeline {
     environment {
         DOCKER_IMAGE_VERSION = '1.0.0'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
-      
     }
 
     stages {
-      
 
-    
         stage('Build Docker Images') {
             steps {
                 script {
@@ -31,7 +28,12 @@ pipeline {
                     ]
                     services.each { serviceName ->
                         dir(serviceName) {
-                            sh "docker build -t ${serviceName}:${DOCKER_IMAGE_VERSION} ."
+                            echo "Building Docker image for ${serviceName} at ${getTimeStamp()}"
+                            try {
+                                sh "docker build -t ${serviceName}:${DOCKER_IMAGE_VERSION} ."
+                            } catch (Exception e) {
+                                error "Failed to build Docker image for ${serviceName}. Error: ${e.getMessage()}"
+                            }
                         }
                     }
                 }
@@ -41,11 +43,24 @@ pipeline {
         stage('Deploy Microservices') {
             steps {
                 script {
-                    sh "docker compose -f ${DOCKER_COMPOSE_FILE} down"
-                    sh "docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                    echo "Stopping and removing containers for ${getTimeStamp()}"
+                    sh "docker-compose -f ${DOCKER_COMPOSE_FILE} down --volumes --remove-orphans"
+                    echo "Starting the microservices at ${getTimeStamp()}"
+                    sh "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
                 }
             }
         }
     }
-}
 
+    post {
+        always {
+            echo "Pipeline completed at ${getTimeStamp()}"
+        }
+        success {
+            echo "Deployment completed successfully!"
+        }
+        failure {
+            echo "There was an error in the pipeline!"
+        }
+    }
+}
