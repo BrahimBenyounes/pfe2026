@@ -1,0 +1,54 @@
+<form [formGroup]="formationForm" (ngSubmit)="submit()">
+    <h2 mat-dialog-title>Add Formation</h2>
+  
+    <mat-dialog-content class="mat-typography">
+      
+      <!-- Title Field -->
+      <mat-form-field appearance="outline">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="titre" placeholder="Formation Title" />
+        <mat-error *ngIf="formationForm.controls['titre'].hasError('required')">
+          Title is required
+        </mat-error>
+      </mat-form-field>
+    
+      <!-- Description Field -->
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description" placeholder="Formation Description" />
+        <mat-error *ngIf="formationForm.controls['description'].hasError('required')">
+          Description is required
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Video URL Field -->
+      <mat-form-field appearance="outline">
+        <mat-label>Video URL</mat-label>
+        <input matInput formControlName="videoUrl" placeholder="YouTube Video URL" />
+        <mat-error *ngIf="formationForm.controls['videoUrl'].hasError('required')">
+          Video URL is required
+        </mat-error>
+        <mat-error *ngIf="formationForm.controls['videoUrl'].hasError('pattern')">
+          Please enter a valid YouTube URL
+        </mat-error>
+      </mat-form-field>
+  
+      <!-- Video ID Field -->
+      <mat-form-field appearance="outline">
+        <mat-label>Video ID</mat-label>
+        <input matInput formControlName="videoId" placeholder="Video ID" />
+        <mat-error *ngIf="formationForm.controls['videoId'].hasError('required')">
+          Video ID is required
+        </mat-error>
+      </mat-form-field>
+  
+    </mat-dialog-content>
+  
+    <mat-dialog-actions>
+      <button mat-button color="accent" mat-dialog-close>Cancel</button>
+      <button mat-button color="primary" [disabled]="formationForm.invalid" type="submit" cdkFocusInitial>
+        Submit
+      </button>
+    </mat-dialog-actions>
+  </form>
+  

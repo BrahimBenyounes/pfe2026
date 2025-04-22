@@ -1,0 +1,164 @@
+/* Table Styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Table Headers */
+  .table thead {
+    background: #eff0f2;
+    color: rgb(6, 6, 6);
+  }
+  
+  .table thead th {
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+    
+  }
+  
+  /* Table Body */
+  .table tbody tr {
+    border-bottom: 1px solid #0e0d0d;
+  }
+  
+  .table tbody tr:nth-child(even) {
+    background: #f8f9fa;
+  }
+  
+  .table tbody td {
+    padding: 10px;
+    color: rgb(6, 6, 6);
+   
+  }
+  
+  
+  
+  /* Action Buttons */
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .action-buttons .btn {
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+  
+ 
+  
+  .btn:hover {
+    opacity: 0.8;
+  }
+
+ 
+
+  #content main {
+    width: 100%;
+    padding: 36px 24px;
+    font-family: var(--poppins);
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+  }
+  
+  #content main .head-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  #content main .head-title .left h1 {
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--dark);
+  }
+  
+  #content main .head-title .btn-add {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 36px;
+    background: var(--blue);
+    color: var(--light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 10px;
+    font-weight: 500;
+  }
+  
+  #content main .head-title .left .breadcrumb {
+    display: flex;
+    align-items: center;
+    grid-gap: 16px;
+    font-size: 20px;
+  }
+  
+  #content main .head-title .left .breadcrumb li {
+    color: var(--dark);
+  }
+  
+  #content main .head-title .left .breadcrumb li a {
+    color: var(--dark-grey);
+    pointer-events: none;
+  }
+  
+  #content main .head-title .left .breadcrumb li a.active {
+   
+    pointer-events: unset;
+  }
+  
+  .head-table {
+    margin-top: 20px;
+  }
+  
+  mat-card {
+    box-shadow: none;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+  }
+  
+  .card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  .mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td,
+  th {
+    width: 10%;
+    
+  }
+  
+  .table-container {
+    height: 300px;
+    max-width: 100%;
+    overflow: auto;
+  }
+  
+  .btn-icon {
+    margin-right: 10px;
+  }
+  
+  
+
+  

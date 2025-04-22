@@ -1,0 +1,16 @@
+# Ignore IntelliJ IDEA project files
+.idea/
+
+# Ignore build and output directories
+target/
+*.log
+
+# Ignore uploads directory
+uploads/
+
+# Ignore Maven wrapper files (optional)
+.mvn/
+
+
+# Ignore MySQL socket files
+docker-compose-config/mysql-pfe-service/mysql.sock

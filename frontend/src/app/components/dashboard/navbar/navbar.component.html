@@ -1,0 +1,43 @@
+<mat-toolbar class="mat-elevation-z8">
+  <nav>
+    <div class="container">
+      <a href="" class="brand"><mat-icon>eco</mat-icon>Harfiyat Al-Rif</a>
+      <ul class="nav-menu">
+        <li>
+          <a href="#" class="active">Home</a>
+        </li>
+        <li>
+          <a href="#products">Products</a>
+        </li>
+        <li>
+          <a href="#services">Services</a>
+        </li>
+       
+        <li>
+          <a routerLink='contact'>Contact</a>
+        </li>
+        <li>
+          <a routerLink='formation'>Formation</a>
+        </li>
+        <li>
+          <a routerLink='login'> Se connecter</a>
+        </li>
+       
+      </ul>
+      <i
+        mat-button
+        [matMenuTriggerFor]="menu"
+        #t="matMenuTrigger"
+        class="bx bx-menu toggle-menu"
+      ></i>
+    </div>
+  </nav>
+</mat-toolbar>
+
+<mat-menu #menu="matMenu">
+  <a href="#" class="submenu" mat-menu-item>Home</a>
+  <a href="#products" class="submenu" mat-menu-item>Products</a>
+  <a href="#services" class="submenu" mat-menu-item>Services</a>
+  <a href="#contact" class="submenu" mat-menu-item>Contact</a>
+  <a href="#login" class="submenu" mat-menu-item>Se connecter</a>
+</mat-menu>
