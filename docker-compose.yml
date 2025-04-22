@@ -40,7 +40,7 @@ services:
   ## MySQL Docker pfe Service
   mysql-pfe-service:
     container_name: mysql-pfe-service
-    image: mysql:latest
+    image: mysql:9.3.0
     volumes:
       - ./docker-compose-config/mysql-pfe-service:/var/lib/mysql
     ports:
