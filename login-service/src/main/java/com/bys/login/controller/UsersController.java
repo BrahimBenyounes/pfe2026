@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 
 @RequestMapping("/pfe/api/login")
-@CrossOrigin("*")
+@CrossOrigin("http://192.168.186.128:4200")
 @Slf4j
 
 
@@ -30,14 +30,14 @@ public class UsersController {
 	}
 	
 	@PostMapping("/loginUser")
-	@CrossOrigin("*")
+	@CrossOrigin("http://192.168.186.128:4200")
 	public Boolean loginUser(@RequestBody LoginRequest loginRequest) {
 		return userService.loginUser(loginRequest);
 		
    }
 
 	@GetMapping("/getAllUsers")
-	@CrossOrigin("*")
+	@CrossOrigin("http://192.168.186.128:4200")
 	public List<Users> getAllUsers() {
 		return userService.getAllUsers();
 	}
