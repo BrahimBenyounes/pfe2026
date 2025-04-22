@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 
 @RequestMapping("pfe/api/contact")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://192.168.186.128:4200")
 @Slf4j
 public class ContactController {
 
