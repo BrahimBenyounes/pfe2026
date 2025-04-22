@@ -14,8 +14,7 @@ pipeline {
     environment {
         DOCKER_IMAGE_VERSION = '1.0.0'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-creds')
-        SONAR_AUTH_TOKEN = credentials('sonar-token')
+      
     }
 
     stages {
