@@ -35,7 +35,7 @@ export class AddUsersComponent {
     console.log(this.userForm.value); // Log the form values for debugging
 
     // Send the POST request to the API
-    this.httpClient.post('http://localhost:8084/pfe/api/login/addUser', this.userForm.value)
+    this.httpClient.post('http://192.168.186.128:8084/pfe/api/login/addUser', this.userForm.value)
       .subscribe(
         (response: any) => {
           alert('User added successfully!');
