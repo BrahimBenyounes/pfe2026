@@ -22,7 +22,7 @@ public class GatewayServerApplication {
         final CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedHeader("*");
-        config.addAllowedOriginPattern("*");
+        config.addAllowedOriginPattern("http://192.168.186.128:4200");
         config.addAllowedMethod("OPTIONS");
         config.addAllowedMethod("POST");
         config.addAllowedMethod("GET");
