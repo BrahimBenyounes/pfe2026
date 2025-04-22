@@ -13,3 +13,7 @@ uploads/
 
 # Ignore MySQL socket files
 docker-compose-config/mysql-pfe-service/mysql.sock
+
+
+docker-compose-config/mysql-pfe-service/
+docker-compose-config/postgres-notification-service/
