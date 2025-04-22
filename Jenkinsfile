@@ -19,11 +19,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git url: 'https://github.com/BrahimBenyounes/pfe2026.git', branch: 'main'
-            }
-        }
+      
 
         stage('Build with Maven') {
             steps {
