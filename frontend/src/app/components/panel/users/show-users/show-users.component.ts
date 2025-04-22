@@ -8,7 +8,7 @@ import { UsersService } from 'src/app/services/users/users.service';
   styleUrls: ['./show-users.component.scss']
 })
 export class ShowUsersComponent implements OnInit {
-  baseUrl = 'http://localhost:8084';
+  baseUrl = 'http://192.168.186.128:8084';
   user: any;
   downloadUrl: string = `${this.baseUrl}/pfe/api/login/getAllUsers`;
 
