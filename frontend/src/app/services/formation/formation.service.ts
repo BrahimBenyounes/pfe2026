@@ -10,7 +10,7 @@ import { Formation } from 'src/app/models/formation.model';  // Créez le modèl
 })
 export class FormationService {
 
-  private apiUrl = 'http://localhost:8088/pfe/api/formation/retrieve-all-formations';
+  private apiUrl = 'http://192.168.186.128:8088/pfe/api/formation/retrieve-all-formations';
 
   constructor(private http: HttpClient) { }
 
