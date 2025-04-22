@@ -8,7 +8,7 @@ import { Contact } from 'src/app/models/contact.model';
 })
 export class ContactService {
 
-  readonly API_URL = 'http://localhost:8089/pfe/api/contact';
+  readonly API_URL = 'http://192.168.186.128:8089/pfe/api/contact';
 
   constructor(private httpClient: HttpClient) {}
 
