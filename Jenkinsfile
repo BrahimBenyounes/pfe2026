@@ -18,30 +18,31 @@ pipeline {
 
     stages {
 
-       
-     stage('Build Docker Images') {
-                steps {
-                    script {
-                        def services = [
-                            "discovery-service", "gateway-service", "product-service",
-                            "formation-service", "order-service", "notification-service",
-                            "login-service", "contact-service"
-                        ]
-                        services.each { serviceName ->
-                            dir(serviceName) {
-                                sh "docker build -t ${serviceName}:${DOCKER_IMAGE_VERSION} ."
-                            }
+        stage('Build Docker Images') {
+            steps {
+                script {
+                    def services = [
+                        "discovery-service", "gateway-service", "product-service",
+                        "formation-service", "order-service", "notification-service",
+                        "login-service", "contact-service"
+                    ]
+                    services.each { serviceName ->
+                        dir(serviceName) {
+                            sh "docker build -t ${serviceName}:${DOCKER_IMAGE_VERSION} ."
                         }
                     }
                 }
             }
-    
-            stage('Deploy Microservices') {
-                steps {
-                    script {
-                        sh "docker compose -f ${DOCKER_COMPOSE_FILE} down"
-                        sh "docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
-                    }
+        }
+
+        stage('Deploy Microservices') {
+            steps {
+                script {
+                    sh "docker compose -f ${DOCKER_COMPOSE_FILE} down"
+                    sh "docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
                 }
             }
+        }
+
+    }
 }
