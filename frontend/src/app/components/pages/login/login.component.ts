@@ -20,7 +20,7 @@ export class LoginComponent {
   public handleSubmit() {
     console.log(this.data.value);
 
-    this.httpClient.post('http://192.168.186.128:8084/pfe/api/login/loginUser', this.data.value).subscribe((data: any) => {
+    this.httpClient.post('http://192.168.186.128:8080/pfe/api/login/loginUser', this.data.value).subscribe((data: any) => {
       console.log(data);
       if (data == true) {
         alert("Login successful");
