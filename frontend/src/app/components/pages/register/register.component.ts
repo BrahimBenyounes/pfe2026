@@ -19,7 +19,7 @@ export class RegisterComponent {
   public handleSubmit() {
     console.log(this.register.value);
 
-    this.httpClient.post('http://localhost:8084/pfe/api/login/addUser', this.register.value).subscribe((data:any) =>{
+    this.httpClient.post('http://192.168.186.128:8084/pfe/api/login/addUser', this.register.value).subscribe((data:any) =>{
       alert("Registration Successfully !!")
     }, error => {
       console.log(error);
