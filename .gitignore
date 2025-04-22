@@ -2,7 +2,6 @@
 .idea/
 
 # Ignore build and output directories
-target/
 *.log
 
 # Ignore uploads directory
