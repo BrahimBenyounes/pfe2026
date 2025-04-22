@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("pfe/api/formation")
-@CrossOrigin(origins = "http://localhost:4200")  // تأكد من أن هذا مناسب لبيئة الإنتاج أيضًا
+@CrossOrigin(origins = "http://192.168.186.128:4200")  
 @Slf4j
 public class FormationController {
 
@@ -23,22 +23,22 @@ public class FormationController {
     public ResponseEntity<List<Formation>> getFormations() {
         List<Formation> list = formationService.retrieveAllFormations();
         if (list.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);  // لا توجد بيانات
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);  
         }
-        return new ResponseEntity<>(list, HttpStatus.OK);  // بيانات موجودة
+        return new ResponseEntity<>(list, HttpStatus.OK);  
     }
 
     @GetMapping("/retrieve-formation/{formation-id}")
     public ResponseEntity<Formation> retrieveFormation(@PathVariable("formation-id") Long formationId) {
         Formation formation = formationService.retrieveFormation(formationId);
         if (formation == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);  // الفيديو غير موجود
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);  
         }
-        return new ResponseEntity<>(formation, HttpStatus.OK);  // تم العثور على الفيديو
+        return new ResponseEntity<>(formation, HttpStatus.OK);  
     }
 
     @PostMapping("/add-formation")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://192.168.186.128:4200")
     public ResponseEntity<Formation> addFormation(@RequestBody Formation f) {
         if (f == null || f.getVideoUrl().isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);  // تحقق من البيانات المدخلة
