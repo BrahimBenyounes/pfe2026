@@ -13,21 +13,25 @@ pipeline {
 
     environment {
         DOCKER_IMAGE_VERSION = '1.0.0'
-        DOCKER_HUB_USERNAME = 'brahim2025'
-        DOCKER_HUB_PASSWORD = 'Lifeisgoodbrahim@@'
         DOCKER_COMPOSE_FILE = 'docker-compose.yml'
-        SONAR_HOST_URL = 'http://192.168.186.128:9001'
-        SONAR_TOKEN = 'sqa_c3bb610452c05f15d1882a711b34657c8f2bfdd3'
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-creds')
+        SONAR_AUTH_TOKEN = credentials('sonar-token')
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/BrahimBenyounes/pfe2026.git', branch: 'main'
+            }
+        }
 
-        
+        stage('Build with Maven') {
+            steps {
+                sh 'mvn clean install -DskipTests'
+            }
+        }
 
-   
-
-     
-      stage('Build Docker Images') {
+        stage('Build Docker Images') {
             steps {
                 script {
                     def services = [
@@ -52,10 +56,6 @@ pipeline {
                 }
             }
         }
-
-        
-      
-
-
     }
 }
+
