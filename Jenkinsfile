@@ -23,23 +23,7 @@ pipeline {
             }
         }
 
-        stage('Maven Build') {
-            steps {
-                script {
-                    def services = [
-                        "discovery-service", "gateway-service", "product-service",
-                        "formation-service", "order-service", "notification-service",
-                        "login-service", "contact-service"
-                    ]
-                    services.each { serviceName ->
-                        dir(serviceName) {
-                            bat "mvn clean package -DskipTests"
-                        }
-                    }
-                }
-            }
-        }
-
+   
         stage('Build Docker Images') {
             steps {
                 script {
