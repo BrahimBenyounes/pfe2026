@@ -12,6 +12,9 @@ pipeline {
         MAVEN_HOME = tool name: 'M3', type: 'maven'
         JAVA_HOME = tool name: 'jdk17', type: 'jdk'
         PATH = "${MAVEN_HOME}/bin:${JAVA_HOME}/bin:${env.PATH}"
+
+        SONAR_HOST_URL = 'http://localhost:9000'
+        SONAR_TOKEN = 'squ_e8b5f30571241cb357ad5734ed99e18e1807aa81'
     }
 
     stages {
@@ -20,31 +23,23 @@ pipeline {
                 checkout scm
             }
         }
-
-        stage('Build Docker Images') {
+          stage('SonarQube Analysis') {
             steps {
                 script {
-                    def services = [
-                        "discovery-service", "gateway-service", "product-service",
-                        "formation-service", "order-service", "notification-service",
-                        "login-service", "contact-service"
-                    ]
-                    services.each { serviceName ->
-                        dir(serviceName) {
-                            bat "docker build -t ${serviceName}:${DOCKER_IMAGE_VERSION} ."
+                    ["login-service"].each { project ->
+                        echo "Processing project: ${project}"
+                        def projectKey = "${project}-${getTimeStamp()}"
+                        dir(project) {
+                            bat 'mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true'
+                           bat "mvn sonar:sonar -Dsonar.token=${env.SONAR_TOKEN} -Dsonar.projectKey=${projectKey} -Dsonar.host.url=${env.SONAR_HOST_URL}"
                         }
                     }
                 }
             }
         }
 
-        stage('Deploy Microservices') {
-            steps {
-                script {
-                    bat "docker compose -f ${DOCKER_COMPOSE_FILE} down"
-                    bat "docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
-                }
-            }
-        }
+    
+
+ 
     }
 }
