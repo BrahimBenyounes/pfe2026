@@ -42,7 +42,7 @@ pipeline {
                             nexusVersion: 'nexus3',
                             protocol: 'http',
                             nexusUrl: 'http://localhost:8081',
-                            groupId: 'org.tokkom',
+                            groupId: 'org.pfe',
                             version: version,
                             repository: 'maven-snapshots',
                             credentialsId: 'nexus-credentials',
