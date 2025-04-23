@@ -63,8 +63,8 @@ pipeline {
                         services.each { serviceName ->
                             def localTag = "${serviceName}:${DOCKER_IMAGE_VERSION}"
                             def remoteTag = "${DOCKER_HUB_USERNAME}/${serviceName}:${DOCKER_IMAGE_VERSION}"
-                            sh "docker tag ${localTag} ${remoteTag}"
-                            sh "docker push ${remoteTag}"
+                            bat "docker tag ${localTag} ${remoteTag}"
+                            bat "docker push ${remoteTag}"
                         }
                     }
                 }
