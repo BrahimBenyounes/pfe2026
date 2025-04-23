@@ -6,10 +6,14 @@ pipeline {
         jdk 'JDK17'
     }
 
-    environment {
-        DOCKER_IMAGE_VERSION = '1.0.0'
-        DOCKER_COMPOSE_FILE = 'docker-compose.yml'
-    }
+   environment {
+    DOCKER_IMAGE_VERSION = '1.0.0'
+    DOCKER_COMPOSE_FILE = 'docker-compose.yml'
+    MAVEN_HOME = tool name: 'Maven', type: 'Maven'
+    JAVA_HOME = tool name: 'JDK17', type: 'JDK'
+    PATH = "${MAVEN_HOME}/bin:${JAVA_HOME}/bin:${env.PATH}"
+}
+
 
     stages {
 
