@@ -23,41 +23,54 @@ pipeline {
                 checkout scm
             }
         }
-            stage('Build Maven Project') {
-            steps {
-                dir('product-service') {
-                    bat 'mvn clean package -DskipTests'
-                }
-            }
-        }
-
-     stage('Upload Artifact to Nexus') {
+     
+        stage('Build Docker Images') {
             steps {
                 script {
-                    def version = "1.0-SNAPSHOT"
-                    def projectName = "product-service"
-
-                    dir('product-service') {
-                        nexusArtifactUploader(
-                            nexusVersion: 'nexus3',
-                            protocol: 'http',
-                            nexusUrl: 'localhost:8081',
-                            groupId: 'org.pfe',
-                            version: version,
-                            repository: 'maven-snapshots',
-                            credentialsId: 'nexus-credentials',
-                            artifacts: [
-                                [
-                                    artifactId: projectName,
-                                    classifier: '',
-                                    file: "target/${projectName}-${version}.jar",
-                                    type: 'jar'
-                                ]
-                            ]
-                        )
+                    def services = [
+                        "discovery-service", "gateway-service", "product-service",
+                        "formation-service", "order-service", "notification-service",
+                        "login-service", "contact-service"
+                    ]
+                    services.each { serviceName ->
+                        dir(serviceName) {
+                            bat "docker build -t ${serviceName}:${DOCKER_IMAGE_VERSION} ."
+                        }
                     }
                 }
             }
         }
+
+        stage('Deploy Microservices') {
+            steps {
+                script {
+                    bat "docker compose -f ${DOCKER_COMPOSE_FILE} down"
+                    bat "docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                }
+            }
+        }
+
+        stage('Push Docker Images to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USERNAME')]) {
+                        sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
+                        def services = [
+                            "discovery-service", "gateway-service", "product-service",
+                            "formation-service", "order-service", "notification-service",
+                            "login-service", "contact-service"
+                        ]
+                        services.each { serviceName ->
+                            def localTag = "${serviceName}:${DOCKER_IMAGE_VERSION}"
+                            def remoteTag = "${DOCKER_HUB_USERNAME}/${serviceName}:${DOCKER_IMAGE_VERSION}"
+                            sh "docker tag ${localTag} ${remoteTag}"
+                            sh "docker push ${remoteTag}"
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
 }
