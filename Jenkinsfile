@@ -31,7 +31,7 @@ pipeline {
             }
         }
 
-        stage('Upload Artifact to Nexus') {
+     stage('Upload Artifact to Nexus') {
             steps {
                 script {
                     def version = "1.0-SNAPSHOT"
