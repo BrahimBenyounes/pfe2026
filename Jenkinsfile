@@ -23,20 +23,38 @@ pipeline {
                 checkout scm
             }
         }
-        stage('SonarQube Analysis') {
+            stage('Build Maven Project') {
+            steps {
+                dir('product-service') {
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
+        }
+
+        stage('Upload Artifact to Nexus') {
             steps {
                 script {
-                    ["login-service"].each { project ->
-                        echo "Processing project: ${project}"
-                        
-                        // استخدام دالة Java لإنشاء طابع زمني
-                        def timestamp = new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone('UTC'))
-                        def projectKey = "${project}-${timestamp}"  // إضافة الطابع الزمني إلى projectKey
+                    def version = "1.0-SNAPSHOT"
+                    def projectName = "product-service"
 
-                        dir(project) {
-                            bat 'mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true'
-                            bat "mvn sonar:sonar -Dsonar.token=${env.SONAR_TOKEN} -Dsonar.projectKey=${projectKey} -Dsonar.host.url=${env.SONAR_HOST_URL}"
-                        }
+                    dir('product-service') {
+                        nexusArtifactUploader(
+                            nexusVersion: 'nexus3',
+                            protocol: 'http',
+                            nexusUrl: 'http://localhost:8081',
+                            groupId: 'org.pfe',
+                            version: version,
+                            repository: 'maven-snapshots',
+                            credentialsId: 'nexus-credentials',
+                            artifacts: [
+                                [
+                                    artifactId: projectName,
+                                    classifier: '',
+                                    file: "target/${projectName}-${version}.jar",
+                                    type: 'jar'
+                                ]
+                            ]
+                        )
                     }
                 }
             }
