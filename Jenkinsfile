@@ -17,28 +17,28 @@ pipeline {
     }
 
     stages {
-                stage('Checkout Code') {
+        stage('Checkout Code') {
             steps {
                 checkout scm
             }
         }
+
         stage('Maven Build') {
-    steps {
-        script {
-            def services = [
-                "discovery-service", "gateway-service", "product-service",
-                "formation-service", "order-service", "notification-service",
-                "login-service", "contact-service"
-            ]
-            services.each { serviceName ->
-                dir(serviceName) {
-                    sh "mvn clean package -DskipTests"
+            steps {
+                script {
+                    def services = [
+                        "discovery-service", "gateway-service", "product-service",
+                        "formation-service", "order-service", "notification-service",
+                        "login-service", "contact-service"
+                    ]
+                    services.each { serviceName ->
+                        dir(serviceName) {
+                            bat "mvn clean package -DskipTests"
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
 
         stage('Build Docker Images') {
             steps {
@@ -50,7 +50,7 @@ pipeline {
                     ]
                     services.each { serviceName ->
                         dir(serviceName) {
-                            sh "docker build -t ${serviceName}:${DOCKER_IMAGE_VERSION} ."
+                            bat "docker build -t ${serviceName}:${DOCKER_IMAGE_VERSION} ."
                         }
                     }
                 }
@@ -60,11 +60,10 @@ pipeline {
         stage('Deploy Microservices') {
             steps {
                 script {
-                    sh "docker compose -f ${DOCKER_COMPOSE_FILE} down"
-                    sh "docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                    bat "docker-compose -f ${DOCKER_COMPOSE_FILE} down"
+                    bat "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
                 }
             }
         }
-
     }
 }
