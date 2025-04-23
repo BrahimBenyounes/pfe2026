@@ -26,7 +26,7 @@ pipeline {
             stage('Build Maven Project') {
             steps {
                 dir('product-service') {
-                    sh 'mvn clean package -DskipTests'
+                    bat 'mvn clean package -DskipTests'
                 }
             }
         }
