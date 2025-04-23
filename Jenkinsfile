@@ -23,23 +23,23 @@ pipeline {
                 checkout scm
             }
         }
-          stage('SonarQube Analysis') {
+        stage('SonarQube Analysis') {
             steps {
                 script {
                     ["login-service"].each { project ->
                         echo "Processing project: ${project}"
-                        def projectKey = "${project}-${getTimeStamp()}"
+                        
+                        // استخدام دالة Java لإنشاء طابع زمني
+                        def timestamp = new Date().format("yyyy-MM-dd_HH-mm-ss", TimeZone.getTimeZone('UTC'))
+                        def projectKey = "${project}-${timestamp}"  // إضافة الطابع الزمني إلى projectKey
+
                         dir(project) {
                             bat 'mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=true'
-                           bat "mvn sonar:sonar -Dsonar.token=${env.SONAR_TOKEN} -Dsonar.projectKey=${projectKey} -Dsonar.host.url=${env.SONAR_HOST_URL}"
+                            bat "mvn sonar:sonar -Dsonar.token=${env.SONAR_TOKEN} -Dsonar.projectKey=${projectKey} -Dsonar.host.url=${env.SONAR_HOST_URL}"
                         }
                     }
                 }
             }
         }
-
-    
-
- 
     }
 }
