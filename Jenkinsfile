@@ -1,8 +1,3 @@
-def getTimeStamp() {
-    def date = new Date()
-    return date.format('yyyyMMddHHmmss')
-}
-
 pipeline {
     agent any
 
@@ -61,8 +56,8 @@ pipeline {
         stage('Deploy Microservices') {
             steps {
                 script {
-                    bat "docker-compose -f ${DOCKER_COMPOSE_FILE} down"
-                    bat "docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                    bat "docker compose -f ${DOCKER_COMPOSE_FILE} down"
+                    bat "docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
                 }
             }
         }
